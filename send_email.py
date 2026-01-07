@@ -20,7 +20,7 @@ body = "Bonjour,\n\nVeuillez trouver ci-joint le rapport pytest.\n\nCordialement
 msg.attach(MIMEText(body, 'plain'))
 
 # Attacher le fichier
-filename = "report.html"
+filename ="rapport.html"
 with open(filename, "rb") as attachment:
     part = MIMEBase('application', 'octet-stream')
     part.set_payload(attachment.read())

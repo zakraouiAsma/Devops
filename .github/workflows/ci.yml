@@ -29,6 +29,7 @@ jobs:
       - name: Run tests
         run: |
           pytest ./tests --html=rapport.html --self-contained-html
+          python send_email.py
 
   # 5. Generate HTML report
      # - name: Generate report

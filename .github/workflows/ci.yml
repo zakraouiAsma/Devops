@@ -51,12 +51,12 @@ jobs:
       - name: deploy
         run: echo "deployement started"
   CI Pipeline:
-  name: Email Notification
-  runs-on: ubuntu-latest
-  needs:
-    - build-and-test
-    - deploy
-  if: always()
+    name: Email Notification
+    runs-on: ubuntu-latest
+    needs:
+     - build-and-test
+     - deploy
+    if: always()
 
   steps:
     - name: Download test report artifact

@@ -7,7 +7,7 @@ from email import encoders
 # Configurer vos informations
 sender_email = "zakraouiasma2019@gmail.com"
 receiver_email = "zakraouiasma2019@gmail.com"
-password = "Zakraoui@14450201"  # Utiliser un mot de passe spécifique pour l'application si Gmail
+password = "uyxz claz gfmc sxdw"  # Utiliser un mot de passe spécifique pour l'application si Gmail
 
 # Créer le message
 msg = MIMEMultipart()

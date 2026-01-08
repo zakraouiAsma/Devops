@@ -54,10 +54,10 @@ jobs:
     name: Email Notification
     runs-on: ubuntu-latest
     needs:
-      - test
+      - build-and-test
       - deploy
-    if: ${{ always() }}
-
+    if:  always() # Always run this job regardless of previous job outcomes
+    
     steps:
       - name: Download test report artifact
         uses: actions/download-artifact@v4
@@ -84,6 +84,5 @@ jobs:
             Commit SHA: ${{ github.sha }}
             Branch: ${{ github.ref_name }}
 
-            Build & Test: ${{ needs.test.result }}
-            Deploy: ${{ needs.deploy.result }}
+            
           attachments: rapport.html

@@ -53,9 +53,8 @@ jobs:
   email:
     name: Email Notification
     runs-on: ubuntu-latest
-    needs:
-      - build-and-test
-      - deploy
+    needs: [build-and-test, deploy]
+      
     if:  always() # Always run this job regardless of previous job outcomes
     
     steps:

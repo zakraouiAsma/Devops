@@ -74,6 +74,7 @@ jobs:
           subject: >
             [${{ github.repository }}] Pipeline ${{ job.status }}
           to: ${{ secrets.SMTP_USERNAME }}
+          cc: "zakraouiasma8@gmail.com"
           from: "GitHub Actions <${{ secrets.SMTP_USERNAME }}>"
           body: |
             Repository: ${{ github.repository }}

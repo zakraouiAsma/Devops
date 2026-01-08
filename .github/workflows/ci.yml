@@ -63,18 +63,17 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: test-report
-        path: ./report
-
+        path: tests/rapport.html
     - name: Send email notification
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
         server_port: 465
-        USER_EMAIL: zakraouiasma2019@gmail.com 
-        PASSWORD:  uyxz claz gfmc sxdw # Utiliser un mot de passe spécifique pour l'application si Gmail
+        username: USER_EMAIL
+        password: PASSWORD # Utiliser un mot de passe spécifique pour l'application si Gmail
         subject: >
           [${{ github.repository }}] Pipeline ${{ job.status }}
-        to: ${{ zakraouiasma2019@gmail.com }}
+        to:  zakraouiasma2019@gmail.com
         from: GitHub Actions <${{ zakraouiasma2019@gmail.com  }}>
         body: |
           Repository: ${{ github.repository }}
@@ -86,4 +85,4 @@ jobs:
 
           Build & Test: ${{ needs.build-and-test.result }}
           Deploy: ${{ needs.deploy.result }}
-        attachments: ./report/rapport.html
+        attachments: tests/rapport.html

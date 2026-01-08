@@ -68,10 +68,10 @@ notify:
     - name: Send email notification
       uses: dawidd6/action-send-mail@v3
       with:
-        server_address: ${{ secrets.SMTP_SERVER }}
-        server_port: ${{ secrets.SMTP_PORT }}
-        username: ${{ zakraouiasma2019@gmail.com  }}
-        password: ${{ uyxz claz gfmc sxdw }}
+        server_address: smtp.gmail.com
+        server_port: 465
+        USER_EMAIL: zakraouiasma2019@gmail.com 
+        PASSWORD:  uyxz claz gfmc sxdw # Utiliser un mot de passe spécifique pour l'application si Gmail
         subject: >
           [${{ github.repository }}] Pipeline ${{ job.status }}
         to: ${{ zakraouiasma2019@gmail.com }}

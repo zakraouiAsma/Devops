@@ -50,7 +50,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: rapport-html
-          path: rapport.html
+          path: ./rapport-html 
 
       - name: Send email notification
         uses: dawidd6/action-send-mail@v3
@@ -72,4 +72,4 @@ jobs:
             Commit SHA: ${{ github.sha }}
             Branch: ${{ github.ref_name }}
 
-          attachments: rapport.html
+          attachments: ./rapport-html/rapport.html

@@ -1,3 +1,5 @@
+name: CI
+
 on:
   push:
   pull_request:
@@ -5,49 +7,68 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest pytest-html
 
-      - name: Run tests and generate HTML report
+      - name: Run tests
         run: |
-          mkdir -p reports
-          pytest --html=reports/report.html --self-contained-html
+          pytest ./tests --html=rapport.html --self-contained-html
 
-      - name: Upload HTML report
+      - name: Upload report
         uses: actions/upload-artifact@v4
         with:
-          name: pytest-html-report
-          path: tests/rapport.html
+          name: rapport-html
+          path: rapport.html
 
-      - name: Send test report by email
-        if: always()
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy
+        run: echo "Deployment started"
+
+  email:
+    name: Email Notification
+    runs-on: ubuntu-latest
+    needs: [test, deploy]
+    if: always()
+    steps:
+      - name: Download test report artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: rapport-html
+          path: ./tests
+
+      - name: Send email notification
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
-          server_port: 587
-          secure: false
+          server_port: 465
+          secure: true
           username: ${{ secrets.SMTP_USERNAME }}
           password: ${{ secrets.SMTP_PASSWORD }}
-          subject: "CI Test Report – ${{ github.repository }}"
+          subject: "[${{ github.repository }}] Pipeline ${{ job.status }}"
           to: ${{ secrets.SMTP_USERNAME }}
-          cc: zakraouiasma8@gmail.com
-          from: "CI  <${{ secrets.SMTP_USERNAME }}>"
+          cc: "zakraouiasma8@gmail.com"
+          from: "GitHub Actions <${{ secrets.SMTP_USERNAME }}>"
+
           body: |
-            Hello,
-     
-            Please find the attached test report.
-     
+            Repository: ${{ github.repository }}
+            Workflow: ${{ github.workflow }}
             Status: ${{ job.status }}
-          attachments: tests/rapport.html
+           
+
+          attachments: ./tests/rapport.html
